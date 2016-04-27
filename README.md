@@ -1,11 +1,11 @@
 # tcls
 Thera Content Location Service
 
-# What is it?
+## What is it?
 
 TCLS is a service designed to search for interesting connections to Thera and notify a slack channel about those which appear.
 
-# How does it work?
+## How does it work?
 
 TCLS scans for Thera connections in Eve-Scout and your corporation's bookmarks and compares them for proximity to content hotspots, including:
 
@@ -13,7 +13,7 @@ TCLS scans for Thera connections in Eve-Scout and your corporation's bookmarks a
 * POS/sov timers
 * High NPC kills
 
-# Contributing
+## Contributing
 
 TCLS is a microservices application, mostly written in Go and deployed using Kubernetes.
 For more information see CONTRIBUTING.md
