@@ -3,7 +3,8 @@ Thera Content Location Service
 
 ## What is it?
 
-TCLS is a service designed to search for interesting connections to Thera and notify a slack channel about those which appear.
+TCLS is a service for the videogame EVE Online.
+It is designed to search for interesting connections to Thera and notify a slack channel about those which appear.
 
 ## How does it work?
 
