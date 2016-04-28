@@ -5,10 +5,5 @@ type Connection struct {
 	Sig  Sig
 }
 
-type System struct {
-	Name string
-}
-
-type Sig struct {
-	Sig string
-}
+type System string
+type Sig string

@@ -37,8 +37,8 @@ func unmarshal(input []byte) ([]Connection, error) {
 	}
 	for _, signature := range result {
 		connections = append(connections, Connection{
-			Dest: System{Name: signature.Destination.Name},
-			Sig:  Sig{Sig: signature.Signature},
+			Dest: System(signature.Destination.Name),
+			Sig:  Sig(signature.Signature),
 		})
 	}
 	return connections, nil
