@@ -19,7 +19,7 @@ func TestReport(t *testing.T) {
 	}
 
 	/*
-	connection := rmq.OpenConnection("tcls", "tcp", "localhost:6379", 0)
-	taskQueue := connection.OpenQueue("connections")
+		connection := rmq.OpenConnection("tcls", "tcp", "localhost:6379", 0)
+		taskQueue := connection.OpenQueue("connections")
 	*/
 }
