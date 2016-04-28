@@ -9,7 +9,7 @@ import (
 )
 
 type signatures struct {
-	Signature string `json:"signatureId"`
+	Signature   string `json:"signatureId"`
 	Destination struct {
 		Name string `json:"name"`
 	} `json:"destinationSolarSystem"`
@@ -35,32 +35,45 @@ func unmarshal(input []byte) ([]Connection, error) {
 	if err := json.Unmarshal(input, &result); err != nil {
 		return nil, err
 	}
-	for _, signature := range(result) {
+	for _, signature := range result {
 		connections = append(connections, Connection{
 			Dest: System{Name: signature.Destination.Name},
-			Sig: Sig{Sig: signature.Signature},
+			Sig:  Sig{Sig: signature.Signature},
 		})
 	}
-	log.Print(connections)
 	return connections, nil
 }
 
-func tick() error {
-	// This function is called once per INTERVAL
+func readConnections() ([]Connection, error) {
+	var connections []Connection
 	bytes, err := fetch()
 	if err != nil {
-		return err
+		return connections, err
 	}
-	_, err = unmarshal(bytes)
+	return unmarshal(bytes)
+}
+
+func tick(producer *ConnectionProducer) error {
+	// This function is called once per INTERVAL
+	var connections []Connection
+	var err error
+
+	for i := 0; i < 3; i++ {
+		connections, err = readConnections()
+		if err == nil {
+			break
+		}
+	}
 	if err != nil {
 		return err
 	}
-	return nil
+	return producer.Report(connections)
 }
 
 func main() {
-	for true {
-		if err := tick(); err != nil {
+	producer := new(ConnectionProducer)
+	for {
+		if err := tick(producer); err != nil {
 			log.Print(err)
 		}
 		time.Sleep(time.Minute)

@@ -2,7 +2,7 @@ package main
 
 type Connection struct {
 	Dest System
-	Sig Sig
+	Sig  Sig
 }
 
 type System struct {
