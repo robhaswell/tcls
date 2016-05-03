@@ -1,12 +1,35 @@
 package main
 
 import (
+	"encoding/json"
+	"log"
+	"reflect"
 	"testing"
-	//"github.com/adjust/rmq"
+	"time"
+
+	"github.com/adjust/rmq"
 )
 
+type TaskConsumer struct {}
+
+var ch = make(chan Connection)
+
+func (consumer *TaskConsumer) Consume(delivery rmq.Delivery) {
+	var connection Connection
+	payload := []byte(delivery.Payload())
+
+	if err := json.Unmarshal(payload, &connection); err != nil {
+		log.Print(err)
+		delivery.Reject()
+		return
+	}
+	ch <- connection
+	delivery.Ack()
+}
+
+// A queue can be reported
+// TODO: Refactor this using the actual consumer logic
 func TestReport(t *testing.T) {
-	// A queue can be reported
 	connections := []Connection{
 		Connection{Dest: System("Aaa"), Sig: Sig("AAA")},
 		Connection{Dest: System("Bbb"), Sig: Sig("BBB")},
@@ -18,8 +41,19 @@ func TestReport(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	/*
-		connection := rmq.OpenConnection("tcls", "tcp", "localhost:6379", 0)
-		taskQueue := connection.OpenQueue("connections")
-	*/
+	qc := rmq.OpenConnection("tcls", "tcp", "localhost:6379", 0)
+	taskQueue := qc.OpenQueue("connections")
+	taskQueue.StartConsuming(10, time.Second)
+
+	taskConsumer := &TaskConsumer{}
+	taskQueue.AddConsumer("task consumer", taskConsumer)
+
+	var result []Connection
+	for {
+		connection := <-ch
+		result = append(result, connection)
+		if reflect.DeepEqual(result, connections) {
+			return
+		}
+	}
 }
