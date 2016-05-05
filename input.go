@@ -14,7 +14,7 @@ type ConnectionProducer struct {
 
    Any errors which occur will result in the error being returned. It is the
    responsibility of the caller to log or otherwise handle this error.
- */
+*/
 func (producer *ConnectionProducer) Report(connections []Connection) error {
 	qc := rmq.OpenConnection("tcls", "tcp", "localhost:6379", 0)
 	taskQueue := qc.OpenQueue("connections")

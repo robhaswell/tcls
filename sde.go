@@ -12,7 +12,7 @@ import (
 
 type SolarSystem struct {
 	SolarSystemId SolarSystemId `yaml:"solarSystemID"`
-	Stargates map[Stargate]struct {
+	Stargates     map[Stargate]struct {
 		Destination Stargate
 	}
 }
@@ -63,7 +63,7 @@ func walkFunc(path string, info os.FileInfo, err error) error {
 	system2id[system] = solarSystemId
 	id2system[solarSystemId] = system
 
-	for stargate, destination := range(solarsystem.Stargates) {
+	for stargate, destination := range solarsystem.Stargates {
 		stargates[solarSystemId] = append(stargates[solarSystemId], destination.Destination)
 		stargate2systemId[stargate] = solarSystemId
 	}
@@ -78,14 +78,14 @@ func main() {
 
 	// Normalise our system->stargate->stargate->system data into just
 	// system->system
-	for solarSystemId, residentStargates := range(stargates) {
-		for _, stargate := range(residentStargates) {
+	for solarSystemId, residentStargates := range stargates {
+		for _, stargate := range residentStargates {
 			destSolarSystemId := stargate2systemId[stargate]
 			jumps[solarSystemId] = append(jumps[solarSystemId], destSolarSystemId)
 		}
 	}
 
-	fp, err := os.OpenFile("data.go", os.O_WRONLY | os.O_CREATE, 0600)
+	fp, err := os.OpenFile("data.go", os.O_WRONLY|os.O_CREATE, 0600)
 	if err != nil {
 		fmt.Print(err)
 		os.Exit(1)

@@ -10,7 +10,7 @@ import (
 	"github.com/adjust/rmq"
 )
 
-type TaskConsumer struct {}
+type TaskConsumer struct{}
 
 var ch = make(chan Connection)
 
