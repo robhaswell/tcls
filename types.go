@@ -6,4 +6,5 @@ type Connection struct {
 }
 
 type System string
+type SolarSystemId int
 type Sig string

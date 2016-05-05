@@ -29,7 +29,7 @@ func (consumer *TaskConsumer) Consume(delivery rmq.Delivery) {
 
 // A queue can be reported
 // TODO: Refactor this using the actual consumer logic
-func TestReport(t *testing.T) {
+func TestReportIntegration(t *testing.T) {
 	connections := []Connection{
 		Connection{Dest: System("Aaa"), Sig: Sig("AAA")},
 		Connection{Dest: System("Bbb"), Sig: Sig("BBB")},
