@@ -10,7 +10,7 @@ import (
 	"github.com/go-yaml/yaml"
 )
 
-type Solarsystem struct {
+type SolarSystem struct {
 	SolarSystemId SolarSystemId `yaml:"solarSystemID"`
 	Stargates map[Stargate]struct {
 		Destination Stargate
@@ -39,7 +39,7 @@ func walkFunc(path string, info os.FileInfo, err error) error {
 	if filename != "solarsystem.staticdata" {
 		return nil
 	}
-	var solarsystem Solarsystem
+	var solarsystem SolarSystem
 
 	fp, err := os.Open(path)
 	if err != nil {
