@@ -8,10 +8,12 @@ import (
 	"path/filepath"
 
 	"github.com/go-yaml/yaml"
+	tcls "../.."
 )
 
+// Internal types
 type SolarSystem struct {
-	SolarSystemId SolarSystemId `yaml:"solarSystemID"`
+	SolarSystemId tcls.SolarSystemId `yaml:"solarSystemID"`
 	Stargates     map[Stargate]struct {
 		Destination Stargate
 	}
@@ -20,19 +22,19 @@ type SolarSystem struct {
 type Stargate int
 
 // Map system names to their IDs
-var system2id = make(map[System]SolarSystemId)
+var system2id = make(map[tcls.System]tcls.SolarSystemId)
 
 // Map system IDs to their names
-var id2system = make(map[SolarSystemId]System)
+var id2system = make(map[tcls.SolarSystemId]tcls.System)
 
 // Map system IDs with which stargates they contain
-var stargates = make(map[SolarSystemId][]Stargate)
+var stargates = make(map[tcls.SolarSystemId][]Stargate)
 
 // Map stargates to their resident system IDs
-var stargate2systemId = make(map[Stargate]SolarSystemId)
+var stargate2systemId = make(map[Stargate]tcls.SolarSystemId)
 
 // Map system IDs with which system IDs they connect to via stargates
-var jumps = make(map[SolarSystemId][]SolarSystemId)
+var jumps = make(map[tcls.SolarSystemId][]tcls.SolarSystemId)
 
 func walkFunc(path string, info os.FileInfo, err error) error {
 	dir, filename := filepath.Split(path)
@@ -55,7 +57,7 @@ func walkFunc(path string, info os.FileInfo, err error) error {
 		return err
 	}
 
-	system := System(filepath.Base(dir))
+	system := tcls.System(filepath.Base(dir))
 	solarSystemId := solarsystem.SolarSystemId
 
 	fmt.Println(path, system, solarSystemId)

@@ -1,11 +1,11 @@
-package main
+package tcls
 
 import (
 	"encoding/json"
 	"io/ioutil"
-	"log"
+	//"log"
 	"net/http"
-	"time"
+	//"time"
 )
 
 type signatures struct {
@@ -69,7 +69,7 @@ func tick(producer *ConnectionProducer) error {
 	}
 	return producer.Report(connections)
 }
-
+/*
 func main() {
 	producer := new(ConnectionProducer)
 	for {
@@ -79,3 +79,4 @@ func main() {
 		time.Sleep(time.Minute)
 	}
 }
+*/

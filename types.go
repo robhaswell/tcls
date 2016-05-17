@@ -1,4 +1,4 @@
-package main
+package tcls
 
 type Connection struct {
 	Dest System
@@ -8,3 +8,9 @@ type Connection struct {
 type System string
 type SolarSystemId int
 type Sig string
+
+/*
+func (s *System) ID() SolarSystemId {
+	return System2Id[s]
+}
+*/
