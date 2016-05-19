@@ -41,3 +41,18 @@ func TestJitaAmarr(t *testing.T) {
 		t.Error("Unexpected number of jumps:", jumps)
 	}
 }
+
+// The distance between regional gates is 1 jump
+func TestRegional(t *testing.T) {
+	s1 := System("HED-GP")
+	s2 := System("Keberz")
+	jumps, err := s1.JumpsTo(s2)
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	if jumps != 1 {
+		t.Error("Unexpected number of jumps:", jumps)
+	}
+}
